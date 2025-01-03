@@ -18,27 +18,14 @@ export default defineConfig({
   },
   plugins: [reactRouter(), tsconfigPaths(),  VitePWA({
     registerType: 'autoUpdate', // auto-update service worker on each load
+    injectRegister: 'auto',
+    workbox: {
+      clientsClaim: true,
+      skipWaiting: true
+    },
     devOptions: {
-      enabled: true
-    },
-    manifest: {
-      name: 'My PWA App',
-      short_name: 'PWA App',
-      description: 'A Progressive Web App with Vite and PWA support',
-      theme_color: '#ffffff',
-      
-      icons: [
-        {
-          src: '/icons/icon-192x192.png',
-          sizes: '192x192',
-          type: 'image/png',
-        },
-        {
-          src: '/icons/icon-512x512.png',
-          sizes: '512x512',
-          type: 'image/png',
-        },
-      ],
-    },
+      enabled: true,
+      type: 'module',
+    }
   })],
 });

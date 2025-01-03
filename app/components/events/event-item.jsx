@@ -20,6 +20,34 @@ export default function EventItem({locked}) {
             </div>
             <MainHeader >Pitfichie</MainHeader>
             <p className="font-semibold">12/12/2024</p>
+            <div className="flex flex-row">
+                <div className="bg-gold rounded-full p-1">
+                <Icon icon="ion:car" className="text-white  w-6 h-6"/>
+                </div>
+                
+                <p className="font-semibold ml-2 pt-1">Thanks for driving </p>
+            </div>
+            <div className="flex flex-row">
+                <div className="bg-gold rounded-full p-1">
+                <Icon icon="mdi:seat-passenger" className="text-white  w-6 h-6"/>
+                </div>
+                
+                <p className="font-semibold ml-2 pt-1">You should be getting a lift</p>
+            </div>
+            <div className="flex flex-row">
+                <div className="bg-gold rounded-full p-1">
+                <Icon icon="bi:rocket-takeoff-fill" className="text-white  w-6 h-6"/>
+                </div>
+                
+                <p className="font-semibold ml-2 pt-1">You are making your own way there</p>
+            </div>
+            <div className="flex flex-row">
+                <div className="bg-gold rounded-full p-1">
+                <Icon icon="bi:bicycle" className="text-white  w-6 h-6"/>
+                </div>
+                
+                <p className="font-semibold ml-2 pt-1">You are pedalling out</p>
+            </div>
             {locked && 
             <div className="flex flex-row">
                 <Icon icon="mdi:lock" className="w-10 h-10"/>
