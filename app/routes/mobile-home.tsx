@@ -8,5 +8,5 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function MobileHome() {
-  return <h1>Welcome to AUMBC</h1>;
+  return <h1>There are no events at the moment</h1>;
 }

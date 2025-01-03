@@ -4,14 +4,14 @@ import {
     index,
     layout,
     prefix,
-  } from "@react-router/dev/routes";
-  
+} from "@react-router/dev/routes";
+
 
 export default [
     index("routes/home.tsx"),
-    ...prefix("concerts", [
+    ...prefix("app", [
     layout("./layouts/mobile-aumbc.tsx",[
-        index("routes/mobile-home.tsx")
+        index("routes/app/event.jsx")
     ]) ])
 
 ] satisfies RouteConfig;
