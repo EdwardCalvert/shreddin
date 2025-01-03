@@ -6,6 +6,14 @@ export default {
   content: ["./app/**/{**,.client,.server}/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      colors:{
+        'gold':
+        {
+          DEFAULT: '#C39424',
+          dark: '#95721F'
+        },
+        'blue': '#163C76'
+      },
       fontFamily: {
         sans: [
           '"Inter"',
@@ -18,22 +26,6 @@ export default {
           '"Noto Color Emoji"',
         ],
       },
-    },
-    colors:{
-      transparent: 'transparent',
-      current: 'currentColor',
-      black: colors.black,
-      white: colors.white,
-      gray: colors.gray,
-      emerald: colors.emerald,
-      indigo: colors.indigo,
-      yellow: colors.yellow,
-      'gold':
-      {
-        DEFAULT: '#C39424',
-        dark: '#95721F'
-      },
-      'blue': '#163C76'
     },
   },
   plugins: [],
