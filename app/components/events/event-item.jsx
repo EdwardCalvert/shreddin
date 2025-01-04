@@ -4,16 +4,24 @@ import MainHeader from "../text/main-headder";
 export default function EventItem({locked}) {
     return (
         <div className="mb-4" >
-            <div className="relative w-full h-[calc(40vh)]">
+            <div className="relative w-full h-[calc(40vh)] ">
                 <img
                     src="murdo.jpg"
-                    className={`rounded-lg w-full h-full object-cover ${locked? "opacity-40" : ""}`}
+                    className="rounded-lg w-full h-full object-cover top-0"
                 />
+
+
                 {locked &&
-                    <Icon
-                    icon="mdi:lock"
-                    className="absolute inset-0 text-black w-20 h-20 m-auto"
-                />
+                    <div>
+                       
+                        <div className="absolute inset-0 bg-gray-400 opacity-30 w-full h-full m-auto rounded-lg"></div>
+                        <Icon
+                            icon="mdi:lock"
+                            className="absolute inset-0 text-black w-20 h-20 m-auto"
+                            
+                        />
+                    </div>
+                    
                 }
                 
                 
