@@ -20,7 +20,7 @@ export default function MobileAumbc() {
     <main>
     <Outlet />
     </main>
-    <div className="fixed bottom-0 left-0 w-full bg-blue text-white pr-2 pl-2 pb-1 pt-1">
+    <div className="fixed bottom-0 left-0 w-full bg-blue text-white pr-2 pl-2 pb-3 pt-1">
         {/* Slider Container */}
         <div className="grid grid-cols-5">
             {icons.map((item, index) => (
