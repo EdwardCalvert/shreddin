@@ -13,7 +13,7 @@ export function meta({}) {
 export default function MobileHome() {
   return (
     <div>
-  <Nav historyEnabled={true} tabs={["Past","Upcoming"]} defaultTabIndex={1} onTabChanged={(e)=> console.log("Tab changed!" +e )}/>
+  <Nav historyEnabled={true} tabs={["Past","Upcoming","Due"]} defaultTabIndex={1} onTabChanged={(e)=> console.log("Tab changed!" +e )}/>
   
 
 <PaddedContainer>
