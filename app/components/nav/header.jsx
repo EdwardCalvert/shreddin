@@ -4,9 +4,9 @@ import { Icon } from "@iconify/react";
 
 export default function Nav({onTabChanged,tabs = [], historyEnabled, defaultTabIndex =0,  }){
     const [activeTab, setActiveTab] = useState(defaultTabIndex);
-    return (
-    <div className="fixed top-0 left-0 h-20 w-full flex flex-col items-center justify-center bg-gold   text-white z-[100]">
-        <img src="./AUMBC_logo.png" alt="logo"  className="absolute top-1 right-4 w-14 "></img>
+    return (<div className="fixed top-0 left-0 h-20 w-full flex flex-col items-center justify-center bg-gold   text-white z-[100]">
+        
+        <img src="./AUMBC_logo.png" alt="logo"  className="absolute top-1 right-4 w-12 "></img>
         {historyEnabled &&  <button className="absolute top-3 left-4 "><Icon icon="material-symbols:keyboard-arrow-left" className="w-8 h-8"/></button>}
         <div className="absolute top-3.5 font-bold ">
             Events
@@ -15,7 +15,7 @@ export default function Nav({onTabChanged,tabs = [], historyEnabled, defaultTabI
             <div className="absolute left-4 top-12 w-[calc(100%-2rem)] h-7 flex items-center bg-gold-dark rounded-full ">
             
             <div
-                className={`absolute left-0  h-[calc(100%-0.5rem)] bg-gold rounded-full transition-all duration-300 p-3.5  outline-gold-dark outline outline-[0.1px] `} 
+                className={`absolute left-0  h-[calc(100%-0.5rem)] bg-gold rounded-full transition-all duration-300 p-3.5  outline-gold-dark outline outline-[1px] `} 
                 style={{width : tabs.length === 3? "calc(33.33% )" : "calc(50%)", transform: `translateX(calc(${100*activeTab}%))`  }}
             >
             </div>
