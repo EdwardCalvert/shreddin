@@ -5,16 +5,14 @@ import MainHeader from "../../components/text/main-headder";
 
 
 
-export default function Event() {
+export default function SettleUp() {
   return (
     <div>
-  <Nav  tabs={["Past","Upcoming"]} defaultTabIndex={1} onTabChanged={(e)=> console.log("Tab changed!" +e )} title="Event"/>
+  <Nav  tabs={["Due","Settled"]} defaultTabIndex={1} onTabChanged={(e)=> console.log("Tab changed!" +e )} title="Settle up"/>
   
 
 
-  <EventPhotocardTitleDate locked={true}/>
-  <EventPhotocardTitleDate locked={true}/>
-  <p>There are no upcoming events</p>
+    <p>Sort your debts here</p>
 
   </div>
 );

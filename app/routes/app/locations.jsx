@@ -5,16 +5,14 @@ import MainHeader from "../../components/text/main-headder";
 
 
 
-export default function Event() {
+export default function Locations() {
   return (
     <div>
-  <Nav  tabs={["Past","Upcoming"]} defaultTabIndex={1} onTabChanged={(e)=> console.log("Tab changed!" +e )} title="Event"/>
+  <Nav  tabs={["Map","List"]} defaultTabIndex={1} onTabChanged={(e)=> console.log("Tab changed!" +e )} title="Locations"/>
   
 
 
-  <EventPhotocardTitleDate locked={true}/>
-  <EventPhotocardTitleDate locked={true}/>
-  <p>There are no upcoming events</p>
+    <p>List the locations here</p>
 
   </div>
 );
