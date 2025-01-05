@@ -5,16 +5,15 @@ import MainHeader from "../../components/text/main-headder";
 
 
 
-export default function Event() {
+export default function Profile() {
   return (
     <div>
-  <Nav  tabs={["Past","Upcoming"]} defaultTabIndex={1} onTabChanged={(e)=> console.log("Tab changed!" +e )} title="Event"/>
+  <Nav  tabs={[]} title="Profile"/>
   
 
 
-  <EventPhotocardTitleDate locked={true}/>
-  <EventPhotocardTitleDate locked={true}/>
-  <p>There are no upcoming events</p>
+    <p>Do profile stuff here</p>
+    <p>Logout here</p>
 
   </div>
 );

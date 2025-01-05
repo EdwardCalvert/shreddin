@@ -12,7 +12,9 @@ export default {
           DEFAULT: '#C39424',
           dark: '#95721F'
         },
-        'blue': '#163C76'
+        'blue': '#163C76',
+        'warn-red':'#dc0000',
+        'success-green' :'#32D655'
       },
       fontFamily: {
         sans: [
