@@ -1,6 +1,6 @@
 {
     "name": "Shreddin'",
-    "start_url" :"/app",
+    "start_url" :"/app/event",
     "display" : "fullscreen",
     "icons": [
         {
