@@ -1,5 +1,5 @@
 import Nav from "../../components/nav/header";
-import EventPhotocardTitleDate from "../../components/events/photocard-title-date";
+import EventPhotocardTitleDate from "../../components/events/event-photocard-title-date";
 import PaddedContainer from "../../components/containers/padding";
 import MainHeader from "../../components/text/main-headder";
 

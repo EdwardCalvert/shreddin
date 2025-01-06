@@ -24,7 +24,7 @@ export default function MobileAumbc() {
                 setActiveState(item.index);
             }
         })
-    },[])
+    },[location])
     return (
 <div >
     <main>
@@ -38,7 +38,7 @@ export default function MobileAumbc() {
             <Link to={item.link}
                 key={index}
                 className={`flex flex-col items-center z-10 cursor-pointer row-start-1 col-start-${index+1}`}
-                onClick={() => setActiveState(index)}
+                
             >
                 <div
                 className={`flex items-center justify-center w-10 h-10 rounded-full transition-colors duration-300 ${
