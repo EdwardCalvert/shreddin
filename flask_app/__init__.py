@@ -53,19 +53,4 @@ def create_app():
     def index():
         return jsonify({"status": "running"})
 
-    from flask_app.exceptions import AppError, NotFoundError
-
-    @app.errorhandler(404)
-    def custom404(error):
-        return NotFoundError().to_api_response()
-
-    if config_type == "prod":
-        @app.errorhandler(Exception)
-        def handle_exception(exception):
-            return AppError().to_api_response()
-
-    @app.errorhandler(AppError)
-    def handle_application_error(exception):
-        return exception.to_api_response()
-
     return app

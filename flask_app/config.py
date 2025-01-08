@@ -25,9 +25,8 @@ class Config:
     JWT_PUBLIC_KEY = ''
 
     try:
-        JWT_SECRET_KEY = open('rs256.pem').read()
-        JWT_PRIVATE_KEY = open('rs256.pem').read()
-        JWT_PUBLIC_KEY = open('rs256.pub').read()
+        JWT_PRIVATE_KEY = open('private.pem').read()
+        JWT_PUBLIC_KEY = open('public.pub').read()
     except:
         pass
 
@@ -58,7 +57,7 @@ class DevelopmentConfig(Config):
     """Dev configuration."""
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.getenv('DEV_DATABASE_URL',
-                                        'postgresql://postgres:inq3quD3uOEyy60UaGx0YFqgrPuRaPY9U6ggHY1gzxiO0JS4WdEkZ1U0Xbt9T2mb@212.227.125.231:5436/healthify-dev')
+                                        "postgres://postgres:LyLxRCMA6MIGzomfckjKNEzrk18VF2U61cPQ9NuxIGxgzxOEcBj7gyncmJp5YsKx@n8so80wgo00c0wcwgowwkkwg:5432/postgres")
 
 
 class ProductionConfig(Config):
@@ -79,8 +78,7 @@ class TestConfig(Config):
     SQLALCHEMY_ENGINE_OPTIONS = {}
 
     try:
-        JWT_SECRET_KEY = open('../rs256.pem').read()
-        JWT_PRIVATE_KEY = open('../rs256.pem').read()
-        JWT_PUBLIC_KEY = open('../rs256.pub').read()
+        JWT_PRIVATE_KEY = open('private.pem').read()
+        JWT_PUBLIC_KEY = open('public.pub').read()
     except:
         pass

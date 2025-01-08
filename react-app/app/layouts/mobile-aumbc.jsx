@@ -7,7 +7,7 @@ import { Link } from "react-router";
 
 export default function MobileAumbc() {
 
-    const [activeState, setActiveState] = useState(); // Track the active state
+    const [activeState, setActiveState] = useState(0); // Track the active state
 
     let location = useLocation()
     const icons = [
