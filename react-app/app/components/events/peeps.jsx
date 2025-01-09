@@ -27,7 +27,7 @@ export default function Peeps(){
                 </div>
             </div>
 
-            <MainHeader className="mt-4">Cancellations</MainHeader> 
+            <MainHeader className="mt-4">Those who've changed plans 🥲</MainHeader> 
             <div className="flex flex-row mb-4">
                 <img
                     src="/murdo.jpg"

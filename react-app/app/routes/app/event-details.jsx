@@ -4,9 +4,10 @@ import { useState } from "react"
 import Whips from "../../components/events/whips"
 import Deets from "../../components/events/deets"
 import Peeps from "../../components/events/peeps"
+import { useNavigate } from "react-router"
 
 export default function EventDetails() {
-
+    const navigate = useNavigate();
     const [index, setIndex ] = useState(0);
     const display = {
         0:<Deets/> , 
@@ -20,6 +21,6 @@ export default function EventDetails() {
         <div className="pb-24">
         {display[index]}
         </div>
-        <StickyBottomButton text="Sign up"/>
+        <StickyBottomButton text="Join in" onClick={()=> navigate("/app/event/join-in")}/>
     </div>
 }
