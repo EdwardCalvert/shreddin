@@ -82,7 +82,7 @@ app.UseCors(policy =>
     policy.WithOrigins(app.Configuration.GetSection("Cors").Get<Cors>()!.AllowedOrigins!);
     policy.AllowCredentials();
 });
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthentication();
 
