@@ -14,7 +14,7 @@ export default function Due(){
         <DebtItem data={{amount: -3.00, eventName:"Pitfichie", date: "12/02/204", action: "Passenger", zones : 3, paidDate: "13/12/2024",  }}/>
         <DebtItem data={{amount: -3.00, eventName:"Pitfichie", date: "12/02/204", action: "Passenger", zones : 3,  pending : true}}/>
         <DebtItem data={{amount: -3.00, eventName:"Fort William", date: "12/02/204", action : "Trip fee"}}/>
-        <DebtItem data={{amount: 6.00, eventName:"Aboyne", date: "12/02/204", action: "Driver"}}/>
+        <DebtItem data={{amount: 116.00, eventName:"Aboyne", date: "12/02/204", action: "Driver"}}/>
         <DebtItem data={{amount: 3.66, eventName:"Fort william", date: "12/02/204", action: "Driver", }}/>
 
         <StickyBottomButton text="Pay now"/>
