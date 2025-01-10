@@ -4,6 +4,7 @@ import tailwindcss from "tailwindcss";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { VitePWA } from 'vite-plugin-pwa'
+import fs from 'fs';
 
 export default defineConfig({
   css: {
@@ -16,6 +17,7 @@ export default defineConfig({
     ],
     },
   },
+  
   plugins: [reactRouter(), tsconfigPaths(),  VitePWA({
     registerType: 'autoUpdate', // auto-update service worker on each load
     injectRegister: 'auto',
@@ -28,4 +30,13 @@ export default defineConfig({
       type: 'module',
     }
   })],
+  // server:{
+  //   https: {
+  //     key: fs.readFileSync('key.pem'),
+  //     cert: fs.readFileSync('cert.pem'),
+  //     rejectUnauthorized: false,
+  //     requestCert: false,
+      
+  //   }
+  // }
 });

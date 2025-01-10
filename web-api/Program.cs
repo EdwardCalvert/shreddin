@@ -41,7 +41,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
         options.SlidingExpiration = true;
         options.ExpireTimeSpan = TimeSpan.FromDays(30);
-        options.Cookie.IsEssential = true;
+        //options.Cookie.IsEssential = true;
+        options.Cookie.Path = "/; Paritioned";
+        options.Cookie.Domain = "localhost:7066";
     });
 builder.Services.AddAuthorization(options =>
 {
@@ -81,6 +83,7 @@ app.UseCors(policy =>
     policy.AllowAnyMethod();
     policy.WithOrigins(app.Configuration.GetSection("Cors").Get<Cors>()!.AllowedOrigins!);
     policy.AllowCredentials();
+    policy.WithExposedHeaders("Set-Cookie");
 });
 //app.UseHttpsRedirection();
 

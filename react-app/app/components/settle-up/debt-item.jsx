@@ -47,7 +47,7 @@ export default function DebtItem({data}){
                 </div>
             }
             <div className={`absolute top-2 right-2 ${data.amount > 0? "bg-violet-400" : "bg-sky-400"} rounded-lg h-10 w-20  flex items-center justify-end `}>
-                <p className="text-white pr-1"><span className="absolute left-1">{data.amount > 0? "+" : "-"}£</span>{Math.abs(data.amount).toFixed(2)}</p>
+                <p className="text-white pr-1"><span className="absolute left-0 text-right w-6">{data.amount > 0? "+" : ""}£</span>{Math.abs(data.amount).toFixed(2)}</p>
             </div>
         </div>
     </div>);
