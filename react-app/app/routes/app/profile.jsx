@@ -10,9 +10,9 @@ export default function Profile() {
     <div>
     <Nav  tabs={[]} title="Profile"/>
   
-    <button onClick={()=> axios.post("https://localhost:7066/auth/auth?username=gfdg&password=sdfgsdfg",{withCredentials: true})}>Click me</button>
-    <button onClick={()=> axios.get("https://localhost:7066/auth/de", { withCredentials: true })}>Click m2e</button>
-    <button onClick={()=> axios.get("https://localhost:7066/auth/auth", { withCredentials: true })}>Click logogt</button>
+    <button onClick={()=> axios.post("https://shreddin-api.coolify.edcalvert.net/auth/auth?username=gfdg&password=sdfgsdfg",{withCredentials: true})}>Click me</button>
+    <button onClick={()=> axios.get("https://shreddin-api.coolify.edcalvert.net/auth/de", { withCredentials: true })}>Click m2e</button>
+    <button onClick={()=> axios.get("https://shreddin-api.coolify.edcalvert.net/auth/auth", { withCredentials: true })}>Click logogt</button>
 
     <p>Do profile stuff here</p>
     <p>Logout here</p>
