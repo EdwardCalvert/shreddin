@@ -20,30 +20,29 @@ builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnC
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.Events.OnValidatePrincipal = async ctx =>
-        {
-            //ctx.RejectPrincipal();
+        //options.Events.OnValidatePrincipal = async ctx =>
+        //{
+        //    //ctx.RejectPrincipal();
 
-            //Add logic here to revoke the session if it is not valid. 
-            if (false)
-            {
-                await ctx.HttpContext.SignOutAsync();
-            }
-        };
+        //    //Add logic here to revoke the session if it is not valid. 
+        //    if (false)
+        //    {
+        //        await ctx.HttpContext.SignOutAsync();
+        //    }
+        //};
         options.Events.OnRedirectToLogin = ctx =>
         {
             ctx.HttpContext.Response.StatusCode = 401;
             return Task.CompletedTask;
         };
         options.Cookie.Name = "auth_cookie";
-        options.Cookie.SameSite = SameSiteMode.None;
         options.Cookie.HttpOnly = true;
-        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
         options.SlidingExpiration = true;
-        options.ExpireTimeSpan = TimeSpan.FromDays(30);
-        //options.Cookie.IsEssential = true;
-        options.Cookie.Path = "/; Paritioned";
-        options.Cookie.Domain = "localhost:7066";
+        options.ExpireTimeSpan = TimeSpan.FromDays(1);
+        options.Cookie.IsEssential = true;
+        options.Cookie.Path = "/; Partitioned";
+        options.Cookie.SameSite = SameSiteMode.None;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
     });
 builder.Services.AddAuthorization(options =>
 {
@@ -83,7 +82,8 @@ app.UseCors(policy =>
     policy.AllowAnyMethod();
     policy.WithOrigins(app.Configuration.GetSection("Cors").Get<Cors>()!.AllowedOrigins!);
     policy.AllowCredentials();
-    policy.WithExposedHeaders("Set-Cookie");
+    //policy.WithMethods(["GET", "HEAD", "OPTIONS", "HEAD", "TRACE", "PUT", "DELETE", "POST", "PATCH", "CONNECT"]);
+    policy.WithExposedHeaders(["Set-Cookie","set-cookie"]);
 });
 //app.UseHttpsRedirection();
 
