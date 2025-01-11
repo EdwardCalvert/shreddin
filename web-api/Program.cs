@@ -1,12 +1,13 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics;
 using System.Text;
+using web_api.DataAccess;
 using web_api.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -64,6 +65,9 @@ builder.Services.AddDataProtection()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSingleton<IPasswordHasher<User>,PasswordHasher<User>>();
+builder.Services.AddScoped<AppDbContext>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -82,8 +86,6 @@ app.UseCors(policy =>
     policy.AllowAnyMethod();
     policy.WithOrigins(app.Configuration.GetSection("Cors").Get<Cors>()!.AllowedOrigins!);
     policy.AllowCredentials();
-    //policy.WithMethods(["GET", "HEAD", "OPTIONS", "HEAD", "TRACE", "PUT", "DELETE", "POST", "PATCH", "CONNECT"]);
-    policy.WithExposedHeaders(["Set-Cookie","set-cookie"]);
 });
 //app.UseHttpsRedirection();
 

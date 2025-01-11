@@ -5,17 +5,61 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using System.Security.Claims;
+using web_api.DataAccess;
 using web_api.Models;
+using web_api.DataAccess;
+using System.Security.Authentication;
+using Microsoft.AspNetCore.Identity;
+using System.Diagnostics;
 
 namespace web_api.Controllers
 {
-    [Route("auth")]
+
+    public class Register
+    {
+        public string UserName { get; set; }
+        public string Password { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string SecurtyQuestion { get; set; }
+    }
+    public class Login
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
+    }
+
+        [Route("auth")]
     [ApiController]
     public class AuthController : ControllerBase
     {
-        [HttpPost,Route("auth")]
-        public async Task<IActionResult> Login(string username, string password)
+        private readonly AppDbContext _appDbContext;
+        private readonly IPasswordHasher<User> _passwordHasher;
+        public AuthController(AppDbContext context, IPasswordHasher<User> passwordHasher)
         {
+            _appDbContext = context;
+            _passwordHasher = passwordHasher;
+        }
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(Login login)
+        {
+            if (!Models.User.IsValidUsername(login.Username))
+            {
+                return BadRequest(new { fronendHint = "Invalid username" });
+            }
+            User? user = _appDbContext.Users.Where(x => x.Username == login.Username).FirstOrDefault();
+            if (default(User) == user)
+            {
+                return BadRequest(new { frontendHint = "Username not found" });
+            }
+            Debug.WriteLine(user.PasswordHash);
+            var verificationResult = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, login.Password);
+            Debug.WriteLine(verificationResult);
+            if(verificationResult == PasswordVerificationResult.Failed)
+            {
+                return BadRequest(new { frontendHint=  "Password incorrect" }); 
+            }
+
             //if (!IsValidUsernameAndPasswod(username, password))
             //    return BadRequest();
 
@@ -23,14 +67,17 @@ namespace web_api.Controllers
 
             var claimsIdentity = new ClaimsIdentity(new[]
             {
-                 new Claim(ClaimTypes.Name, username),
-                 new Claim(ClaimTypes.Role,"Admin" ),
-                 new Claim(ClaimTypes.NameIdentifier, "THIS REALLY IS THIER ID")
+                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
              }, CookieAuthenticationDefaults.AuthenticationScheme);
+            
+            if (user.IsAdmin)
+            {
+                claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, "Admin"));
+            }
 
             var authProperties = new AuthenticationProperties
             {
-                //IsPersistent = true, 
+                IsPersistent = true,
             };
 
             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
@@ -39,6 +86,31 @@ namespace web_api.Controllers
             return NoContent();
         }
 
+        [HttpGet("valid-username")]
+        public async Task<IActionResult> IsUsernameTaken(string username)
+        {
+            return Ok( new 
+            { validUsername = Models.User.IsValidUsername(username) && _appDbContext.Users.Where(x => x.Username == username).FirstOrDefault() == default(User) 
+            } );
+        }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register(Register data)
+        {
+            User user = new User()
+            {
+                Username = data.UserName,
+                Firstname = data.FirstName,
+                Lastname = data.LastName,
+                SecurityQuestion = data.SecurtyQuestion,
+                Id = Guid.NewGuid(),
+            };
+            user.PasswordHash = _passwordHasher.HashPassword(user,data.Password);
+
+            _appDbContext.Users.Add(user);
+            await _appDbContext.SaveChangesAsync();
+            return Ok();
+        }
 
         [HttpGet,Route("auth")]
         public async Task<IActionResult> Logout()

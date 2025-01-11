@@ -14,10 +14,10 @@ namespace web_api.DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseNpgsql(Configuration.GetConnectionString("Default"));
+            options.UseNpgsql(Configuration.GetConnectionString("Default")).UseSnakeCaseNamingConvention();
         }
 
-        public DbSet<Users> Users { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
     }
 }

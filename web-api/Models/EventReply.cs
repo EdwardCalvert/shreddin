@@ -5,9 +5,9 @@ namespace web_api.Models
     public class EventReply
     {
         [Required]
-        public Guid eventReplyId { get; set; }
+        public Guid Id { get; set; }
         public DateTime EventDate { get; set; }
-        public DateTime replyTime { get; set; }
+        public DateTime ReplyTime { get; set; }
 
         public Vehicle? vehicle { get; set; }
         public int status { get; set; }
