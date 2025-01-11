@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,16 +26,15 @@ namespace web_api.Controllers
                  new Claim(ClaimTypes.Name, username),
                  new Claim(ClaimTypes.Role,"Admin" ),
                  new Claim(ClaimTypes.NameIdentifier, "THIS REALLY IS THIER ID")
-        //...
-             }, "Cookies");
+             }, CookieAuthenticationDefaults.AuthenticationScheme);
 
             var authProperties = new AuthenticationProperties
             {
-                IsPersistent = true, 
+                //IsPersistent = true, 
             };
 
             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-            await Request.HttpContext.SignInAsync("Cookies", claimsPrincipal, authProperties);
+            await Request.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal, authProperties);
 
             return NoContent();
         }
