@@ -12,7 +12,10 @@ export default {
           DEFAULT: '#C39424',
           dark: '#95721F'
         },
-        'blue': '#163C76',
+        'blue': {
+          DEFAULT: '#163C76',
+          dark:"#122747"
+        },
         'warn-red':'#dc0000',
         'success-green' :'#32D655'
       },

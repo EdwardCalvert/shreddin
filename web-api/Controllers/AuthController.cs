@@ -17,10 +17,10 @@ namespace web_api.Controllers
 
     public class Register
     {
-        public string UserName { get; set; }
+        public string Username { get; set; }
         public string Password { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
         public string SecurtyQuestion { get; set; }
     }
     public class Login
@@ -29,7 +29,7 @@ namespace web_api.Controllers
         public string Password { get; set; }
     }
 
-        [Route("auth")]
+    [Route("api/v1/auth")]
     [ApiController]
     public class AuthController : ControllerBase
     {

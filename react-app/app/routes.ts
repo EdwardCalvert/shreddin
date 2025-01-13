@@ -8,7 +8,6 @@ import {
 
 
 export default [
-    index("routes/home.tsx"),
     ...prefix("app", [
     layout("./layouts/mobile-aumbc.jsx",[
 
@@ -23,7 +22,10 @@ export default [
         route("medical", "routes/app/medical.jsx"),
         route("medical/me", "routes/app/my-medical.jsx"),
 
-        route("profile", "routes/app/profile.jsx")
-    ]) ])
+        route("profile", "routes/app/profile.jsx"),
+
+        route("image","routes/app/upload-file.jsx")
+    ]) ]),
+    route("register","routes/auth/register.jsx"),
 
 ] satisfies RouteConfig;
