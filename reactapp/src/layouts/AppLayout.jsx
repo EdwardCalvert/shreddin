@@ -1,7 +1,6 @@
 import { Outlet, useLocation } from "react-router";
 import { useState, useEffect } from "react";
 import { Icon } from "@iconify/react";
-import PaddedContainer from "../components/containers/padding"
 import { Link } from "react-router";
 
 
@@ -27,10 +26,8 @@ export default function MobileAumbc() {
     },[location])
     return (
 <div >
-    <main>
-    <PaddedContainer>
+    <main className="mx-4 mt-24 mb-24 z-10">
         <Outlet />
-    </PaddedContainer>
     </main>
     <div className="fixed bottom-0 left-0 w-full bg-blue text-white pr-2 pl-2 pb-3 pt-1">
         <div className="grid grid-cols-5">

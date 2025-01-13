@@ -1,14 +1,15 @@
-import Register from './components/Register';
-import Login from './components/Login';
-import Home from './components/Home';
-import Layout from './components/Layout';
-import Editor from './components/Editor';
-import Admin from './components/Admin';
-import Missing from './components/Missing';
-import Unauthorized from './components/Unauthorized';
-import Lounge from './components/Lounge';
-import LinkPage from './components/LinkPage';
-import RequireAuth from './components/RequireAuth';
+import Register from '../../reactapp/src/components/Register';
+import Login from '../../reactapp/src/components/Login';
+import Home from '../../reactapp/src/components/Home';
+import Layout from '../../reactapp/src/components/Layout';
+import ErrorLayout from '../../reactapp/src/layouts/ErrorLayout';
+import Editor from '../../reactapp/src/components/Editor';
+import Admin from '../../reactapp/src/components/Admin';
+import Missing from '../../reactapp/src/components/Missing';
+import Unauthorized from '../../reactapp/src/components/Unauthorized';
+import Lounge from '../../reactapp/src/components/Lounge';
+import LinkPage from '../../reactapp/src/components/LinkPage';
+import RequireAuth from '../../reactapp/src/components/RequireAuth';
 import { Routes, Route } from 'react-router-dom';
 
 const ROLES = {
@@ -25,7 +26,7 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="linkpage" element={<LinkPage />} />
-        <Route path="unauthorized" element={<Unauthorized />} />
+        <Route path="unauthorized" element={<ErrorLayout> <Unauthorized /></ErrorLayout>} />
 
         {/* we want to protect these routes */}
         <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
@@ -46,7 +47,7 @@ function App() {
         </Route>
 
         {/* catch all */}
-        <Route path="*" element={<Missing />} />
+        <Route path="*" element={<ErrorLayout> <Missing /></ErrorLayout> } />
         </Route>
     </Routes>
     );

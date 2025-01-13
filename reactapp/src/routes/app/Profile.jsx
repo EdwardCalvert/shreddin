@@ -1,8 +1,8 @@
-import Nav from "../../../../reactapp/src/components/nav/header";
-import EventPhotocardTitleDate from "../../../../reactapp/src/components/events/event-photocard-title-date";
-import PaddedContainer from "../../../../reactapp/src/components/containers/padding";
-import MainHeader from "../../../../reactapp/src/components/text/main-headder";
-import api from "../../../../reactapp/src/api/api";
+import Nav from "../../components/nav/header";
+import EventPhotocardTitleDate from "../../components/events/event-photocard-title-date";
+import PaddedContainer from "../../components/containers/padding";
+import MainHeader from "../../components/text/main-headder";
+import api from "../../services/api/api";
 import {useState} from 'react';
 import axios from "axios";
 
