@@ -7,7 +7,7 @@ import MainHeader from "../../components/text/main-headder";
 
 const USER_REGEX = /^([a-z]|\d|\.){5,20}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = '/register';
+const REGISTER_URL = '/api/v1/auth/register';
 
 const Register = () => {
     const userRef = useRef();
@@ -55,8 +55,7 @@ const Register = () => {
             return;
         }
         try {
-            const response = await axios.post(REGISTER_URL,
-                JSON.stringify({ user, pwd }),
+            const response = await axios.post(REGISTER_URL,{ Username: user, Password: pwd },
                 {
                     headers: { 'Content-Type': 'application/json' },
                     withCredentials: true
@@ -73,7 +72,9 @@ const Register = () => {
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');
-            } else if (err.response?.status === 409) {
+            } else if(err.response?.frontendHint){
+                setErrMsg(err.response.frontendHint)
+            }else if (err.response?.status === 409) {
                 setErrMsg('Username Taken');
             } else {
                 setErrMsg('Registration Failed')
@@ -141,7 +142,7 @@ const Register = () => {
                                 onFocus={() => setPwdFocus(true)}
                                 onBlur={() => setPwdFocus(false)}
                             />
-                            <p id="pwdnote" className={pwdFocus && !validPwd ? "instructions" : "hidden"}>
+                            <p id="pwdnote" className={pwdFocus && !validPwd ? "bg-gray-700 text-white p-1 rounded-md mt-2" : "hidden"}>
                                 <FontAwesomeIcon icon={faInfoCircle} />
                                 8 to 24 characters.<br />
                                 Must include uppercase and lowercase letters, a number and a special character.<br />
@@ -166,7 +167,7 @@ const Register = () => {
                                 onFocus={() => setMatchFocus(true)}
                                 onBlur={() => setMatchFocus(false)}
                             />
-                            <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "hidden"}>
+                            <p id="confirmnote" className={matchFocus && !validMatch ? "bg-gray-700 text-white p-1 rounded-md mt-2" : "hidden"}>
                                 <FontAwesomeIcon icon={faInfoCircle} />
                                 Must match the first password input field.
                             </p>
@@ -174,10 +175,7 @@ const Register = () => {
                             <button disabled={!validName || !validPwd || !validMatch ? true : false} className=" mt-4 bg-gold text-white active:bg-gold-dark rounded-lg w-full p-2 disabled:bg-gold-dark disabled:text-gray-300" type="submit">Sign Up</button>
                         </form>
                         <p className="mt-6">
-                            Already registered?
-                            <span className=" ml-2 bg-blue text-white p-2 rounded-md">
-                                <Link to="/">Sign In</Link>
-                            </span>
+                            Already registered? <span className=" ml-2 bg-blue text-white p-2 rounded-md"><Link to="/">Sign In</Link></span>
                         </p>
                     </div>
                 </div>

@@ -2,7 +2,6 @@ import Register from './routes/errors/Register';
 import Login from './routes/errors/Login';
 import Home from './routes/Home';
 import Layout from './layouts/AppLayout';
-import Editor from './routes/errors/Editor';
 import Missing from './routes/errors/Missing';
 import Unauthorized from './routes/errors/Unauthorized';
 import RequireAuth from './routes/errors/RequireAuth';

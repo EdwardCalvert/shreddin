@@ -1,9 +1,10 @@
 import { createContext, useState } from "react";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-    const [auth, setAuth] = useState({});
+    const [auth, setAuth] = useState({roles : useLocalStorage("roles",[])});
 
     return (
         <AuthContext.Provider value={{ auth, setAuth }}>

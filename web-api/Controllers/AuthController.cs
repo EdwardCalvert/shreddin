@@ -11,6 +11,7 @@ using web_api.DataAccess;
 using System.Security.Authentication;
 using Microsoft.AspNetCore.Identity;
 using System.Diagnostics;
+using System.Runtime.ExceptionServices;
 
 namespace web_api.Controllers
 {
@@ -21,7 +22,6 @@ namespace web_api.Controllers
         public string Password { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
-        public string SecurtyQuestion { get; set; }
     }
     public class Login
     {
@@ -97,12 +97,15 @@ namespace web_api.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(Register data)
         {
+            //TODO: First- check if the username is taken. 
+            //If it exists, then check if the account reset date is within the last 7 days.
+            //Then commence recovery
+            //Otherwise, set new password. 
             User user = new User()
             {
-                Username = data.UserName,
-                Firstname = data.FirstName,
-                Lastname = data.LastName,
-                SecurityQuestion = data.SecurtyQuestion,
+                Username = data.Username,
+                Firstname = data.Firstname,
+                Lastname = data.Lastname,
                 Id = Guid.NewGuid(),
             };
             user.PasswordHash = _passwordHasher.HashPassword(user,data.Password);

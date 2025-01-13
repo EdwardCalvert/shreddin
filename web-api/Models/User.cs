@@ -15,7 +15,10 @@ namespace web_api.Models
         public string PasswordHash { get; set; }
         public bool AccountLocked { get; set; }
         public bool IsAdmin { get; set; }
-        public bool AccountReset { get; set; }
+        /// <summary>
+        /// Represents the date when the account password was reset. 
+        /// </summary>
+        public DateTime? AccountReset { get; set; }
         public string? ProfilePhotoUrl { get; set; }
         public Vehicle? Vehicle { get; set; }
 

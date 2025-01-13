@@ -1,5 +1,12 @@
 import axios from 'axios';
-const BASE_URL = 'http://localhost:3500';
+function getUrl() { 
+    if(import.meta.env.VITE_API_SOURCE){ 
+        return import.meta.env.VITE_API_SOURCE
+    }
+    return 'https://shreddin-api.coolify.edcalvert.net'
+}
+
+const BASE_URL = getUrl();
 
 export default axios.create({
     baseURL: BASE_URL
