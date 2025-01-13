@@ -1,10 +1,16 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import MainHeader from "../text/main-headder";
 import { Link } from "react-router";
+import { useEffect } from "react";
 
 export default function EventPhotocardTitleDate({locked}) {
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+
     return (
-        <Link className="mb-4" to="/app/event/details">
+        <Link className="mb-4" to="/app/events/details">
             <div className="relative w-full h-[calc(40vh)] ">
                 <img
                     src="/murdo.jpg"

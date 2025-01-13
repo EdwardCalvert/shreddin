@@ -13,7 +13,6 @@ namespace web_api.Models
         public string Lastname { get; set; }   
         public string Username { get; set; }
         public string PasswordHash { get; set; }
-        public string SecurityQuestion { get; set; }
         public bool AccountLocked { get; set; }
         public bool IsAdmin { get; set; }
         public bool AccountReset { get; set; }

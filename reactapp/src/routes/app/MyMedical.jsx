@@ -1,11 +1,10 @@
 import Nav from "../../components/nav/header";
 import EventPhotocardTitleDate from "../../components/events/event-photocard-title-date";
-import PaddedContainer from "../../components/containers/padding";
 import MainHeader from "../../components/text/main-headder";
 
 
 
-export default function Profile() {
+export default function MyMedical() {
   return (
     <div>
   <Nav  tabs={[]} title="My emergency info" historyEnabled={true}/>

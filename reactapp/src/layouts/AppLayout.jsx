@@ -10,7 +10,7 @@ export default function MobileAumbc() {
 
     let location = useLocation()
     const icons = [
-        { icon: "bi:calendar-event", label: "Events" , link: "/app/event", index: 0},
+        { icon: "bi:calendar-event", label: "Events" , link: "/app/events", index: 0},
         { icon: "bi:cash-stack", label: "Settle up", link:"/app/settle-up", index:1 },
         { icon: "bi:map", label: "Locations", link:"/app/locations",index:2 },
         { icon: "bi:file-earmark-medical", label: "Med. info",link:"/app/medical",index: 3 },
