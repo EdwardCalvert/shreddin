@@ -13,7 +13,7 @@ import Medical from './routes/app/Medical';
 import MyMedical from './routes/app/MyMedical';
 import SettleUp from './routes/app/SettleUp';
 import Locations from './routes/app/Locations';
-import Profile from './routes/app/profile';
+import Profile from './routes/app/MyProfile';
 
 const ROLES = {
     'User': "2001",
