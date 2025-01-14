@@ -4,23 +4,23 @@ namespace web_api.Models
 {
     public class Events
     {
-        [Required]
-        public Guid eventId { get; set; }
+        [Required, Key]
+        public Guid Id { get; set; }
 
         [Required,MaxLength(100)]
-        public string name { get; set; }
+        public string Name { get; set; }
         [MaxLength(1000)]
-        public string description { get; set; }
+        public string Description { get; set; }
         [Required]
-        public DateTime meetTime { get; set; }
+        public DateTime MeetTime { get; set; }
         [Required]
-        public Location meetLocation { get; set; }
-        public Location parkLocation { get; set; }
-        public int eventStatus { get; set; }
+        public Location MeetLocation { get; set; }
+        public Location ParkLocation { get; set; }
+        public int EventStatus { get; set; }
         //Could be an event, a 
         //Could be a non-cancellable event. 
         //Need to consider if attendance is recorded. 
-        public string ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
 
 
     }

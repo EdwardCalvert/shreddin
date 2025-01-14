@@ -1,17 +1,23 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics;
 using System.Text;
+using web_api.DataAccess;
 using web_api.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddLogging(config =>
+{ 
+    config.AddDebug();
+    config.AddConsole();
+});
 
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                       .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
@@ -51,6 +57,7 @@ builder.Services.AddAuthorization(options =>
 });
 builder.Services.AddLogging(builder => builder.AddConsole());
 
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -63,6 +70,9 @@ builder.Services.AddDataProtection()
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.Configure<R2>(builder.Configuration.GetSection("R2"));
+builder.Services.AddSingleton<IPasswordHasher<User>,PasswordHasher<User>>();
+builder.Services.AddScoped<AppDbContext>();
 
 var app = builder.Build();
 
@@ -71,10 +81,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-
 }
-
-
 
 app.UseCors(policy =>
 {
@@ -82,8 +89,6 @@ app.UseCors(policy =>
     policy.AllowAnyMethod();
     policy.WithOrigins(app.Configuration.GetSection("Cors").Get<Cors>()!.AllowedOrigins!);
     policy.AllowCredentials();
-    //policy.WithMethods(["GET", "HEAD", "OPTIONS", "HEAD", "TRACE", "PUT", "DELETE", "POST", "PATCH", "CONNECT"]);
-    policy.WithExposedHeaders(["Set-Cookie","set-cookie"]);
 });
 //app.UseHttpsRedirection();
 
@@ -92,6 +97,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapDefaultControllerRoute();
 
 app.Run();
