@@ -16,24 +16,24 @@ import Locations from './routes/app/Locations';
 import Profile from './routes/app/profile';
 
 const ROLES = {
-    'User': 2001,
-    'Editor': 1984,
-    'Admin': 5150
+    'User': "2001",
 }
 
 function App() {
     return (
     <Routes>
         <Route path="/"  >
-          <Route path="app/" element={<Layout/>} > 
-            <Route path="events" element={<Event/>}/>
-            <Route path="events/details" element={<EventDetails/>}/>
-            <Route path="events/details/join-in" element={<JoinIn/>}/>
-            <Route path="medical/me" element={<MyMedical/>}/>
-            <Route path="medical" element={<Medical/>}/>
-            <Route path="settle-up" element={<SettleUp/>}/>
-            <Route path="locations" element={<Locations/>}/>
-            <Route path="profile" element={<Profile/>}/>
+          <Route element={<RequireAuth allowedRoles={[ROLES.User, "5001"]} />}>
+            <Route path="app/" element={<Layout/>} > 
+              <Route path="events" element={<Event/>}/>
+              <Route path="events/details" element={<EventDetails/>}/>
+              <Route path="events/details/join-in" element={<JoinIn/>}/>
+              <Route path="medical/me" element={<MyMedical/>}/>
+              <Route path="medical" element={<Medical/>}/>
+              <Route path="settle-up" element={<SettleUp/>}/>
+              <Route path="locations" element={<Locations/>}/>
+              <Route path="profile" element={<Profile/>}/>
+            </Route>
           </Route>
           {/* public routes */}
 
@@ -43,9 +43,7 @@ function App() {
           <Route path="unauthorized" element={<Unauthorized />} />
 
           {/* we want to protect these routes */}
-          <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
-              <Route path="/" element={<Home />} />
-          </Route>
+          
 
 
           {/* catch all */}

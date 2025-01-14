@@ -12,6 +12,10 @@ using System.Security.Authentication;
 using Microsoft.AspNetCore.Identity;
 using System.Diagnostics;
 using System.Runtime.ExceptionServices;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
+using Microsoft.EntityFrameworkCore;
+using System.Net;
+using Microsoft.Extensions.Configuration;
 
 namespace web_api.Controllers
 {
@@ -22,6 +26,7 @@ namespace web_api.Controllers
         public string Password { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
+        public string SecurityCode { get; set; }
     }
     public class Login
     {
@@ -35,10 +40,14 @@ namespace web_api.Controllers
     {
         private readonly AppDbContext _appDbContext;
         private readonly IPasswordHasher<User> _passwordHasher;
-        public AuthController(AppDbContext context, IPasswordHasher<User> passwordHasher)
+        private readonly IConfiguration _configuration;
+        private readonly ILogger<AuthController> _logger;
+        public AuthController(AppDbContext context, IPasswordHasher<User> passwordHasher, IConfiguration config, ILogger<AuthController> logger )
         {
             _appDbContext = context;
             _passwordHasher = passwordHasher;
+            _configuration = config;
+            _logger = logger;
         }
         [HttpPost("login")]
         public async Task<IActionResult> Login(Login login)
@@ -47,33 +56,32 @@ namespace web_api.Controllers
             {
                 return BadRequest(new { fronendHint = "Invalid username" });
             }
-            User? user = _appDbContext.Users.Where(x => x.Username == login.Username).FirstOrDefault();
+            User? user = await _appDbContext.Users.Where(x => x.Username == login.Username).FirstOrDefaultAsync();
             if (default(User) == user)
             {
                 return BadRequest(new { frontendHint = "Username not found" });
             }
-            Debug.WriteLine(user.PasswordHash);
+            else if(user.AccountLocked) 
+            {
+                return Unauthorized(new { frontendHint = "Account locked" });
+            }
             var verificationResult = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, login.Password);
-            Debug.WriteLine(verificationResult);
             if(verificationResult == PasswordVerificationResult.Failed)
             {
                 return BadRequest(new { frontendHint=  "Password incorrect" }); 
             }
-
-            //if (!IsValidUsernameAndPasswod(username, password))
-            //    return BadRequest();
-
-            //var user = GetUserFromUsername(username);
 
             var claimsIdentity = new ClaimsIdentity(new[]
             {
                  new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
              }, CookieAuthenticationDefaults.AuthenticationScheme);
             
-            if (user.IsAdmin)
+            foreach(string i in user.Roles)
             {
-                claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, "Admin"));
+               claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, i));
             }
+                
+           
 
             var authProperties = new AuthenticationProperties
             {
@@ -83,15 +91,7 @@ namespace web_api.Controllers
             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
             await Request.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal, authProperties);
 
-            return NoContent();
-        }
-
-        [HttpGet("valid-username")]
-        public async Task<IActionResult> IsUsernameTaken(string username)
-        {
-            return Ok( new 
-            { validUsername = Models.User.IsValidUsername(username) && _appDbContext.Users.Where(x => x.Username == username).FirstOrDefault() == default(User) 
-            } );
+            return Ok(new { user.Roles});
         }
 
         [HttpPost("register")]
@@ -101,28 +101,52 @@ namespace web_api.Controllers
             //If it exists, then check if the account reset date is within the last 7 days.
             //Then commence recovery
             //Otherwise, set new password. 
+            if(data.SecurityCode != _configuration["UserRegistrationSecurityCode"])
+            {
+                return Unauthorized(new { frontendHint = "AUMBC Security code invalid" });
+            }
+
+            if (!Models.User.IsValidUsername(data.Username))
+            {
+                return BadRequest(new { fronendHint = "Invalid username" });
+            }
+            User? db_user = await _appDbContext.Users.Where(x => x.Username == data.Username).FirstOrDefaultAsync();
+            if (db_user != default(User))
+            {
+                return Conflict(new { frontendHint = "Username already taken" });
+            }
             User user = new User()
             {
                 Username = data.Username,
                 Firstname = data.Firstname,
                 Lastname = data.Lastname,
+                Roles = [Models.User.UserRoles.User],
                 Id = Guid.NewGuid(),
             };
             user.PasswordHash = _passwordHasher.HashPassword(user,data.Password);
-
-            _appDbContext.Users.Add(user);
-            await _appDbContext.SaveChangesAsync();
-            return Ok();
+            try
+            {
+                _appDbContext.Users.Add(user);
+                await _appDbContext.SaveChangesAsync();
+                return NoContent();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError("Error while registering user {Exception}", ex);
+                return BadRequest(new { frontendHint = "Registration failed" });
+            }
+            
+            
         }
 
-        [HttpGet,Route("auth")]
+        [HttpGet,Route("logout")]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
             return NoContent();
         }
 
-        [Authorize, HttpGet,Route("de")]
+        [Authorize, HttpGet,Route("get-details")]
         public async Task<IActionResult> TestAuth()
         {
             if (User.IsInRole("Admin"))
@@ -134,7 +158,10 @@ namespace web_api.Controllers
                 // User is a regular user
                 return Ok("You are logged in, as a User");
             }
-            return BadRequest("You are not signed in");
+            Console.Write(User.IsInRole("2001"));
+            var claims = User.Claims.Where(claim => claim.Type == ClaimTypes.Role).Select(claim => claim.Value ).ToArray();
+
+            return Ok(new { bob=claims });
         }
     }
 }

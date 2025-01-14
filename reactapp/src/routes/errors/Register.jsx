@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from '../../api/axios';
 import { Link } from "react-router-dom";
 import MainHeader from "../../components/text/main-headder";
+import useInput from "../../hooks/useInput";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 const USER_REGEX = /^([a-z]|\d|\.){5,20}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -13,7 +15,7 @@ const Register = () => {
     const userRef = useRef();
     const errRef = useRef();
 
-    const [user, setUser] = useState('');
+    const [user, setUser] = useLocalStorage("username","");
     const [validName, setValidName] = useState(false);
     const [userFocus, setUserFocus] = useState(false);
 
@@ -24,6 +26,15 @@ const Register = () => {
     const [matchPwd, setMatchPwd] = useState('');
     const [validMatch, setValidMatch] = useState(false);
     const [matchFocus, setMatchFocus] = useState(false);
+
+    const [firstName, resetFirstName, firstNameObj] = useInput("");
+    const [validFirstName, setValidFirstName] = useState(false);
+
+    const [lastName, resetLastName, lastNameObj] = useInput("");
+    const [validLastName, setValidLastName] =useState(false);
+
+    const [securityCode, resetSecurityCode, securityCodeObj] = useInput("");
+    const [validSecurityCode, setValidSecurityCode] = useState(false);
 
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
@@ -37,13 +48,26 @@ const Register = () => {
     }, [user])
 
     useEffect(() => {
+        setValidFirstName(firstName.length >0 && firstName.length < 25);
+    }, [firstName])
+
+    useEffect(() => {
+        setValidLastName(lastName.length >0 && lastName.length < 25);
+    }, [lastName])
+
+    useEffect(() => {
+        setValidSecurityCode(securityCode.length == 15);
+    }, [securityCode])
+
+
+    useEffect(() => {
         setValidPwd(PWD_REGEX.test(pwd));
         setValidMatch(pwd === matchPwd);
     }, [pwd, matchPwd])
 
     useEffect(() => {
         setErrMsg('');
-    }, [user, pwd, matchPwd])
+    }, [user, pwd, matchPwd,firstName,lastName])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -55,20 +79,18 @@ const Register = () => {
             return;
         }
         try {
-            const response = await axios.post(REGISTER_URL,{ Username: user, Password: pwd },
+            const response = await axios.post(REGISTER_URL,{ Username: user, Password: pwd, Firstname: firstName, Lastname: lastName, SecurityCode : securityCode },
                 {
                     headers: { 'Content-Type': 'application/json' },
                     withCredentials: true
                 }
             );
-            // TODO: remove console.logs before deployment
-            console.log(JSON.stringify(response?.data));
-            //console.log(JSON.stringify(response))
             setSuccess(true);
             //clear state and controlled inputs
-            setUser('');
             setPwd('');
             setMatchPwd('');
+            resetFirstName();
+            resetLastName();
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');
@@ -86,20 +108,46 @@ const Register = () => {
     return (
         <>
             {success ? (
-                <section>
-                    <h1>Success!</h1>
-                    <p>
-                        <a href="#">Sign In</a>
-                    </p>
+                <section className="flex flex-col  justify-center items-center">
+                    <MainHeader>Success!</MainHeader>
+
+                    <div className="mt-2">
+                        <Link to="/login" className=" ml-2 bg-blue text-white p-2 rounded-md">Sign In</Link>
+                    </div>
                 </section>
             ) : (
                 <div className="flex flex-col  justify-center items-center">
                     <MainHeader>Register</MainHeader>
                     <div className="items-center justify-center max-w-md w-full mx-4">
-                        <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+                        <p ref={errRef} className={errMsg ? "bg-warn-red text-white p-2 rounded-md" : "hidden"} >{errMsg}</p>
                         
                         <form onSubmit={handleSubmit} className="flex flex-col">
-                            <label htmlFor="username">
+
+                        <label htmlFor="firstName">
+                                First name:
+                                <FontAwesomeIcon icon={faCheck} className={validFirstName ? "text-success-green" : "hidden"} />
+                                <FontAwesomeIcon icon={faTimes} className={validFirstName || !firstName ? "hidden" : "text-warn-red"} />
+                            </label>
+                            <input
+                                className="bg-white p-1 rounded-md"
+                                type="text"
+                                id="firstName"
+                                {...firstNameObj}
+                                required
+                            />
+                            <label htmlFor="lastName" className="mt-4">
+                                Last name:
+                                <FontAwesomeIcon icon={faCheck} className={validLastName ? "text-success-green" : "hidden"} />
+                                <FontAwesomeIcon icon={faTimes} className={validFirstName || !lastName ? "hidden" : "text-warn-red"} />
+                            </label>
+                            <input
+                                className="bg-white p-1 rounded-md"
+                                type="text"
+                                id="lastName"
+                                {...lastNameObj}
+                                required
+                            />
+                            <label htmlFor="username" className="mt-4">
                                 Username:
                                 <FontAwesomeIcon icon={faCheck} className={validName ? "text-success-green" : "hidden"} />
                                 <FontAwesomeIcon icon={faTimes} className={validName || !user ? "hidden" : "text-warn-red"} />
@@ -172,7 +220,22 @@ const Register = () => {
                                 Must match the first password input field.
                             </p>
 
-                            <button disabled={!validName || !validPwd || !validMatch ? true : false} className=" mt-4 bg-gold text-white active:bg-gold-dark rounded-lg w-full p-2 disabled:bg-gold-dark disabled:text-gray-300" type="submit">Sign Up</button>
+                            
+
+                            <label htmlFor="securityCode" className="mt-4">
+                                AUMBC's Security code:
+                                <FontAwesomeIcon icon={faCheck} className={validSecurityCode ? "text-success-green" : "hidden"} />
+                                <FontAwesomeIcon icon={faTimes} className={validSecurityCode || !securityCode ? "hidden" : "text-warn-red"} />
+                            </label>
+                            <input
+                                className="bg-white p-1 rounded-md"
+                                type="text"
+                                id="securityCode"
+                                {...securityCodeObj}
+                                required
+                            />
+                            
+                            <button disabled={!validName || !validPwd || !validMatch || !validFirstName || !validLastName ? true : false} className=" mt-4 bg-gold text-white active:bg-gold-dark rounded-lg w-full p-2 disabled:bg-gold-dark disabled:text-gray-300" type="submit">Sign Up</button>
                         </form>
                         <p className="mt-6">
                             Already registered? <span className=" ml-2 bg-blue text-white p-2 rounded-md"><Link to="/">Sign In</Link></span>

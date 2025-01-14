@@ -1,6 +1,6 @@
 import Nav from "../../components/nav/header";
 import {useState} from 'react';
-import axios from "axios";
+import axios from "../../api/axios";
 
 
 export default function Profile() {
@@ -13,36 +13,16 @@ export default function Profile() {
     {text.map((e) => <p>{e}</p>
     )}
 
-<button onClick={() =>api.get("v1/auth/de").text( x => console.log(x))}>
+<button onClick={() =>api.get("/api/v1/auth/get-details").text( x => console.log(x))}>
 Im a new button
 </button>
 
-<button onClick={() =>api.get("v1/auth/auth").text( x => console.log(x))}>
+<button onClick={() =>axios.get("/api/v1/auth/logout").text( x => console.log(x))}>
 Log me out
 </button>
-    <button onClick={()=> {fetch("https://localhost:7066/api/v1/auth/auth?username=gfdg&password=sdfgsdfg", {
-  method: 'POST',
-  credentials: 'include'
-})
-  .then((json) => {
-    console.log('Gotcha');
-    setText([...text, "Cheese"])
-    console.log(text);
-  }).catch((err) => {
-    console.log(err);
-});}}>    LOGIN </button>
 
- <button className="m-2 bg-blue" onClick={async ()=> {
-  await axios.post("https://localhost:7066/api/v1/auth/login",
-    JSON.stringify({ Username: "username", Password:"string" }),
-    {
-        headers: { 'Content-Type': 'application/json' },
-        withCredentials: true
-    }
-);
-  }}>LOgin with axios</button>
 
-<button onClick={()=> {fetch("https://localhost:7066/api/v1/auth/de", {
+<button onClick={()=> {fetch("https://localhost:7066/api/v1/auth/get-details", {
   method: 'GET',
   credentials: 'include'
 })

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -34,12 +35,13 @@ namespace web_api.Migrations
                     lastname = table.Column<string>(type: "text", nullable: false),
                     username = table.Column<string>(type: "text", nullable: false),
                     password_hash = table.Column<string>(type: "text", nullable: false),
-                    security_question = table.Column<string>(type: "text", nullable: false),
                     account_locked = table.Column<bool>(type: "boolean", nullable: false),
+                    roles = table.Column<List<string>>(type: "text[]", nullable: false),
                     is_admin = table.Column<bool>(type: "boolean", nullable: false),
-                    account_reset = table.Column<bool>(type: "boolean", nullable: false),
+                    account_reset = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     profile_photo_url = table.Column<string>(type: "text", nullable: true),
-                    vehicle_id = table.Column<Guid>(type: "uuid", nullable: true)
+                    vehicle_id = table.Column<Guid>(type: "uuid", nullable: true),
+                    emergency_contact_details = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -50,6 +52,12 @@ namespace web_api.Migrations
                         principalTable: "vehicles",
                         principalColumn: "id");
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "ix_users_username",
+                table: "users",
+                column: "username",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "ix_users_vehicle_id",

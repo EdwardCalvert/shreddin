@@ -4,7 +4,8 @@ import useLocalStorage from "../hooks/useLocalStorage";
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-    const [auth, setAuth] = useState({roles : useLocalStorage("roles",[])});
+    console.log(localStorage.getItem("roles"))
+    const [auth, setAuth] = useLocalStorage( "auth",{roles : [], isLoggedIn: false });
 
     return (
         <AuthContext.Provider value={{ auth, setAuth }}>
