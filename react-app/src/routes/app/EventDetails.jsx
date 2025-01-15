@@ -21,6 +21,6 @@ export default function EventDetails() {
         <div className="pb-24">
         {display[index]}
         </div>
-        <StickyBottomButton text="Join in" onClick={()=> navigate("/app/event/join-in")}/>
+        <StickyBottomButton text="Join in" onClick={()=> navigate("/app/events/details/join-in")}/>
     </div>
 }

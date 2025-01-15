@@ -1,25 +1,24 @@
-import Nav from "../../components/nav/header";
-import {useState} from 'react';
-import axios from "../../api/axios";
+import useLogout from "../../hooks/useLogout";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Profile() {
+  const navigate = useNavigate();
+  const logout = useLogout();
 
+  const signOut = async () => {
+    navigate('/');
+    await logout();
+      
+  }
 
-  const [text, setText] = useState([]);
   return (
     <div>
-    <Nav  tabs={[]} title="Profile"/>
-    {text.map((e) => <p>{e}</p>
-    )}
 
-<button onClick={() =>api.get("/api/v1/auth/get-details").text( x => console.log(x))}>
-Im a new button
+<button className="bg-blue text-white active:bg-blue-dark active:text-gray-600 rounded-md p-2" onClick={()=> signOut()}>
+Sign out
 </button>
 
-<button onClick={() =>axios.get("/api/v1/auth/logout").text( x => console.log(x))}>
-Log me out
-</button>
 
 
 <button onClick={()=> {fetch("https://localhost:7066/api/v1/auth/get-details", {

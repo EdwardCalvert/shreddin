@@ -4,7 +4,11 @@ Flask-app uses asymmetric certificate to sign JWT tokens.
 docker run --mount type=bind,src=.,dst=/project,ro```
 
 ## Backend
-Again, this is batteries-included and will connect to the development Postgresql database. We anticipate offering different configurations in the near future. 
+Again, this is batteries-included and will connect to the development Postgresql database. We anticipate offering different configurations in the near future.
+
+```
+($env:VITE_API_SOURCE = "https://localhost:7066") -and (npm run dev)
+```
 
 ### Running the first time
 1. cd into `src\flask_app`

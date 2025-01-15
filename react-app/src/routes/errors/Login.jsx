@@ -90,7 +90,7 @@ const Login = () => {
                 />
                 <button type='submit' className='mt-4 bg-gold text-white active:bg-gold-dark rounded-lg w-full p-2 disabled:bg-gold-dark disabled:text-gray-300'>Sign In</button>
             </form>
-            <p className='mt-4'>
+            <p className='mt-12'>
                 Need an Account? <Link to="/register" className='ml-2 bg-blue text-white p-2 rounded-md'>Sign Up</Link>
             </p>
             </div>

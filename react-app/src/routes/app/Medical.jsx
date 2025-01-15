@@ -1,5 +1,4 @@
 import Nav from "../../components/nav/header";
-import MainHeader from "../../components/text/main-headder";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Link } from "react-router";
 
