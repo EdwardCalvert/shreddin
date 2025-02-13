@@ -6,6 +6,7 @@ import path from "path";
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: "/",
   postcss: {
     plugins: 
     [
@@ -15,7 +16,6 @@ export default defineConfig({
   ],
   },
   plugins: [react()],
-  base: "./",
   resolve: {
     alias: {
       "@components": path.resolve(__dirname, "src/components"),
@@ -23,5 +23,11 @@ export default defineConfig({
       "@routes": path.resolve(__dirname, "src/routes") ,
       "@layouts": path.resolve(__dirname, "src/layouts") 
     }
-  }
+  },
+  build: {
+    outDir: "build",  
+  },
+  server: {
+    historyApiFallback: true, 
+  },
 })
