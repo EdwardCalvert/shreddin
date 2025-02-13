@@ -14,4 +14,4 @@ RUN npm run build
 
 EXPOSE $PORT
 
-CMD ["sh", "-c", "serve -s dist -l $PORT"]
+CMD ["sh", "-c", "serve -s  build --single -l $PORT"]
