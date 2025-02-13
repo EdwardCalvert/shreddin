@@ -4,7 +4,6 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 //Object:
 //Title 
 export default function DebtItem({data}){
-    console.log(data)
     return (
     <div className="relative bg-white w-full rounded-lg mb-4 min-h-[104px]">
         <div className="ml-4 py-1">

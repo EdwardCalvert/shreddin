@@ -26,8 +26,8 @@ function App() {
           <Route element={<RequireAuth allowedRoles={[ROLES.User, "5001"]} />}>
             <Route path="app/" element={<Layout/>} > 
               <Route path="events" element={<Event/>}/>
-              <Route path="events/details" element={<EventDetails/>}/>
-              <Route path="events/details/join-in" element={<JoinIn/>}/>
+              <Route path="events/:id" element={<EventDetails/>}/>
+              <Route path="events/:id/join-in" element={<JoinIn/>}/>
               <Route path="medical/me" element={<MyMedical/>}/>
               <Route path="medical" element={<Medical/>}/>
               <Route path="settle-up" element={<SettleUp/>}/>

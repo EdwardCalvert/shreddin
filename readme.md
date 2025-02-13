@@ -1,64 +1,42 @@
+# Shreddin'
 
-Flask-app uses asymmetric certificate to sign JWT tokens. 
-```bash
-docker run --mount type=bind,src=.,dst=/project,ro```
+An app to improve the user experience of signing up to trips at the University of Aberdeen's Mountain Biking Club. The focus is on simplifying signing up to trips for users, allowing committee members to understand if there is sufficient car space, and will ultimately allow for a simplified payment system based on the concept of zones, based off the mvp at [https://edwardcalvert.github.io/aumbc-zones-mvp/](https://edwardcalvert.github.io/aumbc-zones-mvp/)
 
-## Backend
-Again, this is batteries-included and will connect to the development Postgresql database. We anticipate offering different configurations in the near future.
+## Structure
 
-```
-($env:VITE_API_SOURCE = "https://localhost:7066") -and (npm run dev)
-```
+A .NET Web API with entity framework. HTTP only cookie, so it can't be accessed by JavaScript. 
 
-### Running the first time
-1. cd into `src\flask_app`
-2. Create a virtual environment using
+A React Frontend, with vite and tailwind. 
 ```powershell
- python3 -m venv .venv
- ```
-3. Activate the virtual environment, using  
-Windows: 
-```powershell
-.\.venv\Scripts\Activate.ps1
-``` 
-Linux: 
-```bash
-source .venv/bin/activate
-```
-4. Install the requirements using 
-```powershell
-pip install -r requirements.txt
-```
-5. Setup the environment (secrets etc) < - add instructions?
-6. Run flask using the command: 
-```powershell
-flask --app app --debug run
+($env:VITE_API_SOURCE = "https://shreddin-backend.edcalvert.net") -and (npm run dev)
 ```
 
-### Run after initialised
-1. Navigate into `src\flask_app`
-```powershell
-cd src\flask_app
-```
-2. Activate your virtual environment using
+# Deploy
 
-Powershell: 
-```powershell
-.\.venv\Scripts\Activate.ps1
-``` 
-Linux: 
-```bash
-source .venv/bin/activate
-```
-2. Run flask using the command:
-```powershell
-flask --app app --debug run
-```
+```json
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "Cors": {
+    "AllowedOrigins": [ "<<Your origins>>" ]
+  },
 
-More detailed information regarding the backend can be found in the readme.md file in `src\flask_app`
+  "DataProtectionFolder":"<<Your folder>>",
+  "ConnectionStrings": {
+    "Default": "<<Your connection string>>"
+  },
+  "R2": {
+    "TokenValue": "<<Your token value>>",
+    "AccessKeyID": "<<Your access key ID>>",
+    "SecretAccessKey": "<<Your secret access key>>",
+    "Endpoint": "<<Your endpoint>>",
+    "BucketName": "<<Your bucket name>>"
+  },
+  "UserRegistrationSecurityCode": "<<your registration code>>"
+}
 
-### Running tests
-Run pytest in `src/flask_app/`
-```
-pytest
 ```

@@ -6,7 +6,7 @@ import { Link } from "react-router";
 
 export default function MobileAumbc() {
 
-    const [activeState, setActiveState] = useState(0); // Track the active state
+    const [activeState, setActiveState] = useState(-2); // Track the active state
 
     let location = useLocation()
     const icons = [
@@ -26,11 +26,11 @@ export default function MobileAumbc() {
     },[location])
     return (
 <div >
-    <main className="mx-4 mt-24 mb-24 z-10">
+    <main className="mt-24 mb-24 z-10 max-w-screen-md mx-auto px-4">
         <Outlet />
     </main>
     <div className="fixed bottom-0 left-0 w-full bg-blue text-white pr-2 pl-2 pb-3 pt-1">
-        <div className="grid grid-cols-5">
+        <div className="grid grid-cols-5 max-w-screen-md mx-auto">
             {icons.map((item, index) => (
             <Link to={item.link}
                 key={index}
@@ -45,7 +45,6 @@ export default function MobileAumbc() {
                     <Icon icon={item.icon} className="w-6 h-6" />
                     
                 </div>
-                {/* Text Label */}
                 <span
                 className={`mt-2 text-xs transition-opacity duration-300 ${
                     activeState === index ? "opacity-100" : "opacity-0"
@@ -56,6 +55,6 @@ export default function MobileAumbc() {
             </Link>
             ))}
         </div>
-        </div>
+    </div>
 </div>);
 }

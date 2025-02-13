@@ -1,5 +1,6 @@
-#https://thedkpatel.medium.com/dockerizing-react-application-built-with-vite-a-simple-guide-4c41eb09defa
 FROM node:23-alpine
+
+ARG PORT=3000
 
 WORKDIR /app
 
@@ -11,6 +12,6 @@ COPY . .
 
 RUN npm run build
 
-EXPOSE 3000
+EXPOSE $PORT
 
-CMD [ "serve", "-s", "dist" ]
+CMD ["sh", "-c", "serve -s build -l $PORT"]
