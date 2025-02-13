@@ -4,7 +4,7 @@ function getUrl() {
     if(import.meta.env.VITE_API_SOURCE){ 
         return import.meta.env.VITE_API_SOURCE
     }
-    return 'https://shreddin-api.coolify.edcalvert.net'
+    return 'https://shreddin-backend.edcalvert.net'
 }
 
 const BASE_URL = getUrl();
