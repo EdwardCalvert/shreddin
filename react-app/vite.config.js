@@ -15,10 +15,8 @@ export default defineConfig({
   ],
   },
   plugins: [react()],
-  base: "./",
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "src"),
       "@components": path.resolve(__dirname, "src/components"),
       "@hooks": path.resolve(__dirname, "src/hooks"),
       "@routes": path.resolve(__dirname, "src/routes") ,
