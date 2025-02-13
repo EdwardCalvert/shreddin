@@ -5,22 +5,25 @@ import Whips from "../../components/events/whips"
 import Deets from "../../components/events/deets"
 import Peeps from "../../components/events/peeps"
 import { useNavigate } from "react-router"
+import { useParams } from "react-router"
+import useLocalStorage from "../../hooks/useLocalStorage"
 
 export default function EventDetails() {
+    let { id } = useParams();
     const navigate = useNavigate();
-    const [index, setIndex ] = useState(0);
+    const [index, setIndex ] = useLocalStorage("event-details-tab",0);
     const display = {
         0:<Deets/> , 
         1: <Peeps/> ,
         2: <Whips/>,
     }
 
-    return <div>
-        <Nav tabs={["deets","peeps","whips"]} historyEnabled={true} title={"Event details"} onTabChanged={(e)=>setIndex(e)}/>
+    return <div className="pb-24">
+        <Nav tabs={["deets","peeps","whips"]} historyEnabled={true} title={"Event details"} onTabChanged={(e)=>setIndex(e)} defaultTabIndex={index}/>
         
         <div className="pb-24">
         {display[index]}
         </div>
-        <StickyBottomButton text="Join in" onClick={()=> navigate("/app/events/details/join-in")}/>
+        <StickyBottomButton text="Join in" onClick={()=> navigate(`/app/events/${id}/join-in`)}/>
     </div>
 }

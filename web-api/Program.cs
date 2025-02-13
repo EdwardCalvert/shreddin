@@ -26,16 +26,6 @@ builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnC
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        //options.Events.OnValidatePrincipal = async ctx =>
-        //{
-        //    //ctx.RejectPrincipal();
-
-        //    //Add logic here to revoke the session if it is not valid. 
-        //    if (false)
-        //    {
-        //        await ctx.HttpContext.SignOutAsync();
-        //    }
-        //};
         options.Events.OnRedirectToLogin = ctx =>
         {
             ctx.HttpContext.Response.StatusCode = 401;
@@ -90,7 +80,6 @@ app.UseCors(policy =>
     policy.WithOrigins(app.Configuration.GetSection("Cors").Get<Cors>()!.AllowedOrigins!);
     policy.AllowCredentials();
 });
-//app.UseHttpsRedirection();
 
 app.UseAuthentication();
 

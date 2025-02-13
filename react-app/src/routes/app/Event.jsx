@@ -1,19 +1,19 @@
 import Nav from "../../components/nav/header";
-import EventPhotocardTitleDate from "../../components/events/event-photocard-title-date";
-
+import { useState } from "react";
+import EventList from "../../components/events/event-list";
 
 
 export default function Event() {
+  const [index, setIndex ] = useState(1);
+  const display = {
+      0:<p>You have attended no past events</p> , 
+      1: <EventList/> ,
+  }
+  
   return (
     <div>
-  <Nav  tabs={["Past","Upcoming"]} defaultTabIndex={1} onTabChanged={(e)=> console.log("Tab changed!" +e )} title="Event"/>
-  
-
-
-  <EventPhotocardTitleDate locked={true}/>
-  <EventPhotocardTitleDate locked={true}/>
-  <p>There are no upcoming events</p>
-
-  </div>
+      <Nav  tabs={["Past","Upcoming"]} defaultTabIndex={index} onTabChanged={(e)=> setIndex(e)} title="Event"/>
+      {display[index]}
+    </div>
 );
 }
