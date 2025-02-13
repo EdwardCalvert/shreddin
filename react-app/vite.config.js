@@ -4,7 +4,6 @@ import autoprefixer from "autoprefixer";
 import tailwindcss from "tailwindcss";
 import path from "path";
 
-console.log(__dirname);
 // https://vite.dev/config/
 export default defineConfig({
   postcss: {
@@ -16,6 +15,7 @@ export default defineConfig({
   ],
   },
   plugins: [react()],
+  base: "./",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
