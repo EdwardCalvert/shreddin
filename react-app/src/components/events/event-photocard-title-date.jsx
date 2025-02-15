@@ -8,14 +8,13 @@ import {EventInfoSeverity} from "./event-info-severity"
 import EventInfoIcon from "@components/events/event-info-icon"
 import PropTypes from 'prop-types';
 
-export default function EventPhotocardTitleDate({locked, datetime,title,imageUrl, status, warnings, id, linkActive=true}) {
+export default function EventPhotocardTitleDate({locked, datetime,title,imageUrl, status, id, linkActive=true}) {
     EventPhotocardTitleDate.propTypes ={
         locked: PropTypes.bool.isRequired,
         datetime: PropTypes.instanceOf(Date).isRequired,
         title: PropTypes.string.isRequired,
         imageUrl: PropTypes.string.isRequired,
         status: PropTypes.number.isRequired,
-        warnings: PropTypes.number.isRequired,
         id: PropTypes.string.isRequired,
         linkActive: PropTypes.bool
     }
@@ -45,21 +44,25 @@ export default function EventPhotocardTitleDate({locked, datetime,title,imageUrl
             </div>
             <MainHeader>{title}</MainHeader>
             <p className="font-semibold">{datetime?.toLocaleDateString("en-GB")}</p>
-            {Boolean(warnings & EVENT_STATUS_FLAGS.MAXIMUM_CAPACITY)&& <EventInfoIcon icon={EventIcons.Info} label="Maximum capacity reached" type={EventInfoSeverity.Warning} subText="Make sure to sign up as a passenger to be on the waiting list" />}
-            {Boolean(warnings & EVENT_STATUS_FLAGS.CANCELLED)&& <EventInfoIcon icon={EventIcons.Cross} label="Cancelled" type={EventInfoSeverity.Warning} />}
-            {Boolean(warnings & EVENT_STATUS_FLAGS.RESCHEDULED)&& <EventInfoIcon icon={EventIcons.CrossedArrows} label="Re-scheduled" type={EventInfoSeverity.Warning} />}
+            {Boolean(status & EVENT_STATUS_FLAGS.MAXIMUM_CAPACITY)&& <EventInfoIcon icon={EventIcons.Info} label="Maximum capacity reached" type={EventInfoSeverity.Warning} subText="Make sure to sign up as a passenger to be on the waiting list" />}
+            {Boolean(status & EVENT_STATUS_FLAGS.CANCELLED)&& <EventInfoIcon icon={EventIcons.Cross} label="Cancelled" type={EventInfoSeverity.Warning} />}
+            {Boolean(status & EVENT_STATUS_FLAGS.RESCHEDULED)&& <EventInfoIcon icon={EventIcons.CrossedArrows} label="Re-scheduled" type={EventInfoSeverity.Warning} />}
 
 
             {Boolean(status & EVENT_STATUS_FLAGS.DRIVING)&& <EventInfoIcon icon={EventIcons.Driver} label="Thanks for driving" type={EventInfoSeverity.Info}/>}
             {Boolean(status & EVENT_STATUS_FLAGS.PASSENGER)&& <EventInfoIcon icon={EventIcons.Passenger} label="You should be getting a lift" type={EventInfoSeverity.Info} subText={"Make sure to be at ASV Carpark 1 for 10:00"} />}
             {Boolean(status & EVENT_STATUS_FLAGS.MAKING_OWN_WAY)&& <EventInfoIcon icon={EventIcons.MakingOwnWay} label="You are making your own way there" type={EventInfoSeverity.Info} />}
-            {Boolean(status & EVENT_STATUS_FLAGS.PEADALING_OUT)&& <EventInfoIcon icon={EventIcons.CyclingOut} label="You are cycling out" type={EventInfoSeverity.Info} />}
+            {Boolean(status & EVENT_STATUS_FLAGS.PEDALING_OUT)&& <EventInfoIcon icon={EventIcons.CyclingOut} label="You are cycling out" type={EventInfoSeverity.Info} />}
 
 
             {Boolean(status & EVENT_STATUS_FLAGS.INTEREST_REGISTERED)&& <EventInfoIcon icon={EventIcons.Tick} label="Interest registered" type={EventInfoSeverity.Success} />}
 
             {Boolean(status & EVENT_STATUS_FLAGS.BOOKING_SCHEDULED)&& <EventInfoIcon icon={EventIcons.Info} label="Sign-up opens at: 19:00" type={EventInfoSeverity.Pending} />}
             {Boolean(status & EVENT_STATUS_FLAGS.BOOKING_OPEN)&& <EventInfoIcon icon={EventIcons.Clock} label="Sign-up closes at: 19:00" type={EventInfoSeverity.Urgent} />}
+
+            {Boolean(status & EVENT_STATUS_FLAGS.EVENT_OCCURRED)&& <EventInfoIcon icon={EventIcons.History} label="Event occured" type={EventInfoSeverity.Warning} />}
+            {Boolean(status & EVENT_STATUS_FLAGS.EVENT_ATTENDED)&& <EventInfoIcon icon={EventIcons.Tick} label="You attended this event" type={EventInfoSeverity.Success} />}
+            {Boolean(status & EVENT_STATUS_FLAGS.EVENT_ABSENCE)&& <EventInfoIcon icon={EventIcons.RecordedAbsence} label="You signed up, but didn't attend" type={EventInfoSeverity.Urgent} />}
 
 
             {locked && 
