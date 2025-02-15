@@ -16,6 +16,7 @@ using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pag
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 using Microsoft.Extensions.Configuration;
+using web_api.DTOs;
 
 namespace web_api.Controllers
 {
@@ -50,7 +51,7 @@ namespace web_api.Controllers
             _logger = logger;
         }
         [HttpPost("login")]
-        public async Task<IActionResult> Login(Login login)
+        public async Task<ActionResult<LoginResponseDto>> Login(Login login)
         {
             if (!Models.User.IsValidUsername(login.Username))
             {
@@ -91,16 +92,17 @@ namespace web_api.Controllers
             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
             await Request.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal, authProperties);
 
-            return Ok(new { user.Roles});
+            return Ok(new LoginResponseDto{ 
+                roles = user.Roles, 
+                imageUrl = user.ProfilePhotoUrl, 
+                firstName = user.Firstname, 
+                lastName = user.Lastname
+            });
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(Register data)
         {
-            //TODO: First- check if the username is taken. 
-            //If it exists, then check if the account reset date is within the last 7 days.
-            //Then commence recovery
-            //Otherwise, set new password. 
             if(data.SecurityCode != _configuration["UserRegistrationSecurityCode"])
             {
                 return Unauthorized(new { frontendHint = "AUMBC Security code invalid" });
@@ -135,8 +137,6 @@ namespace web_api.Controllers
                 _logger.LogError("Error while registering user {Exception}", ex);
                 return BadRequest(new { frontendHint = "Registration failed" });
             }
-            
-            
         }
 
         [HttpGet,Route("logout")]

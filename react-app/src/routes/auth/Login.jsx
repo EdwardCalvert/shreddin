@@ -1,11 +1,12 @@
 import { useRef, useState, useEffect } from 'react';
 import useAuth from '../../hooks/useAuth';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-
+import ButtonWithSpinner from '@components/buttons/button';
 import axios from '../../api/axios';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import MainHeader from '../../components/text/main-headder';
 const LOGIN_URL = '/api/v1/auth/login';
+
 
 const Login = () => {
     const { setAuth } = useAuth();
@@ -21,6 +22,8 @@ const Login = () => {
     const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('');
 
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
         userRef.current.focus();
     }, [])
@@ -31,8 +34,9 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        setLoading(true);
         try {
+            
             const response = await axios.post(LOGIN_URL,
                 JSON.stringify({ username: user, password: pwd }),
                 {
@@ -40,10 +44,11 @@ const Login = () => {
                     withCredentials: true
                 }
             );
-            console.log(JSON.stringify(response?.data));
-            //console.log(JSON.stringify(response));
-            const roles = response?.data?.roles;
-            setAuth({ loggedIn: true, roles });
+            const data = response?.data;
+            if(data){
+                setAuth({ loggedIn: true, roles: data.roles, profilePhoto: data.imageUrl, firstName: data.firstName, lastName: data.lastName });
+            }
+            
             setPwd('');
             navigate(from, { replace: true });
         } catch (err) {
@@ -57,11 +62,12 @@ const Login = () => {
             }
             errRef.current.focus();
         }
+        setLoading(false);
     }
 
     return (
 
-        <section className="flex flex-col justify-center items-center">
+        <section className="flex flex-col justify-center items-center mx-4 mt-4 relative">
             
             <MainHeader>Sign In</MainHeader>
             <p ref={errRef} className={errMsg ? "bg-warn-red text-white p-2 rounded-md" : "hidden"} >{errMsg}</p>
@@ -88,7 +94,7 @@ const Login = () => {
                     value={pwd}
                     required
                 />
-                <button type='submit' className='mt-4 bg-gold text-white active:bg-gold-dark rounded-lg w-full p-2 disabled:bg-gold-dark disabled:text-gray-300'>Sign In</button>
+                <ButtonWithSpinner type="submit" loading={loading} text="Sign in"/>
             </form>
             <p className='mt-12'>
                 Need an Account? <Link to="/register" className='ml-2 bg-blue text-white p-2 rounded-md'>Sign Up</Link>

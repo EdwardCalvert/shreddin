@@ -14,6 +14,7 @@ import MyMedical from './routes/app/MyMedical';
 import SettleUp from './routes/app/SettleUp';
 import Locations from './routes/app/Locations';
 import Profile from './routes/app/MyProfile';
+import UploadFile from '@components/my-profile/profile-photo'
 
 const ROLES = {
     'User': "2001",
@@ -33,6 +34,7 @@ function App() {
               <Route path="settle-up" element={<SettleUp/>}/>
               <Route path="locations" element={<Locations/>}/>
               <Route path="profile" element={<Profile/>}/>
+              <Route path="image" element={<UploadFile/>}/>
             </Route>
           </Route>
           {/* public routes */}

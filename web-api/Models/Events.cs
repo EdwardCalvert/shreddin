@@ -13,6 +13,8 @@ namespace web_api.Models
         public string Description { get; set; }
         [Required]
         public DateTime MeetTime { get; set; }
+        public DateTime SignupTime { get; set; }
+
         [Required]
         public Location MeetLocation { get; set; }
         public Location ParkLocation { get; set; }
