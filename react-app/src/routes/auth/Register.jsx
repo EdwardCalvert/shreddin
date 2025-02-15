@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import MainHeader from "../../components/text/main-headder";
 import useInput from "../../hooks/useInput";
 import useLocalStorage from "../../hooks/useLocalStorage";
+import ButtonWithSpinner from "@components/buttons/button";
 
 const USER_REGEX = /^([a-z]|\d|\.){5,20}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -38,6 +39,7 @@ const Register = () => {
 
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         userRef.current.focus();
@@ -78,6 +80,7 @@ const Register = () => {
             setErrMsg("Invalid Entry");
             return;
         }
+        setLoading(true);
         try {
             const response = await axios.post(REGISTER_URL,{ Username: user, Password: pwd, Firstname: firstName, Lastname: lastName, SecurityCode : securityCode },
                 {
@@ -103,6 +106,7 @@ const Register = () => {
             }
             errRef.current.focus();
         }
+        //setLoading(false);
     }
 
     return (
@@ -234,8 +238,7 @@ const Register = () => {
                                 {...securityCodeObj}
                                 required
                             />
-                            
-                            <button disabled={!validName || !validPwd || !validMatch || !validFirstName || !validLastName ? true : false} className=" mt-4 bg-gold text-white active:bg-gold-dark rounded-lg w-full p-2 disabled:bg-gold-dark disabled:text-gray-300" type="submit">Sign Up</button>
+                            <ButtonWithSpinner disabled={!validName || !validPwd || !validMatch || !validFirstName || !validLastName ? true : false} text="Sign up" loading={loading}/>
                         </form>
                         <p className="mt-6">
                             Already registered? <span className=" ml-2 bg-blue text-white p-2 rounded-md"><Link to="/">Sign In</Link></span>

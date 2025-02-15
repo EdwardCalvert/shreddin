@@ -1,11 +1,11 @@
 import React from 'react'
 
-const ButtonWithSpinner = ({loading, text, className}) => {
+const ButtonWithSpinner = ({loading, text, className, disabled}) => {
     return (
         <button 
         type='submit' 
-        className={`inline-flex justify-center  mt-4 transition duration-150 ease-in-out bg-gold text-white active:bg-gold-dark rounded-lg w-full p-2 disabled:bg-gold-dark disabled:text-gray-300  disabled:cursor-not-allowed`} 
-        disabled={loading}>
+        className={`inline-flex justify-center  mt-4 transition duration-150 ease-in-out bg-gold text-white active:bg-gold-dark rounded-lg w-full p-2 disabled:bg-gold-dark disabled:text-gray-300  disabled:cursor-not-allowed ${className}`} 
+        disabled={loading|| disabled}>
             {loading&& 
             <svg className="mr-3 -ml-1 size-5 animate-spin text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
