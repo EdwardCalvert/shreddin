@@ -7,5 +7,8 @@ export const EventIcons ={
     Cross: "codex:cross",
     CrossedArrows: "tabler:arrows-shuffle",
     Tick: "bi:check-lg",
-    Clock: "bi:clock"
+    Clock: "bi:clock",
+    History: "bi:clock-history",
+    RecordedAttendance: "bi:clipboard-check",
+    RecordedAbsence:"bi:clipboard2-x" 
 }

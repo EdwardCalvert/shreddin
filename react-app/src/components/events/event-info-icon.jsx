@@ -21,13 +21,13 @@ function getTypeStyle(type){
     }
 }
 
-const EventInfoIcon = ({ icon, label, type=InfoType.Warning, subText=null}) => (
+const EventInfoIcon = ({ icon, label, type=EventInfoSeverity.Warning, subText=null}) => (
     <>
         <div className="flex flex-row mb-1">
             <div className={` rounded-full p-1 ${getTypeStyle(type)}`}>
                 <Icon icon={icon} className="text-white  w-6 h-6"/>
             </div>
-            <p className="font-semibold ml-2 pt-1">{label}</p>
+            <p className={`${type==EventInfoSeverity.Warning? "font-semibold" :"" } ml-2 pt-1`}>{label}</p>
         </div>
         {subText&&
             <p className="pt-1">{subText}</p>

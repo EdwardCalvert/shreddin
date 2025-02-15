@@ -9,6 +9,10 @@ import { EVENT_STATUS_FLAGS } from "@components/events/event-status-flags"
 //     imageUrl: "/the-tappie-tower.jpg"
 
 // },
+
+const warnings =[
+    {name: "cancelled", message:"Cancelled due to bad weather"}
+]
 export  const MockEvents =[{
     title: "Pitfichie",
     locked: false,
@@ -23,7 +27,7 @@ export  const MockEvents =[{
     locked: false,
     datetime : new Date(2024, 11,12),
     key:"13",
-    status: EVENT_STATUS_FLAGS.NONE & EVENT_STATUS_FLAGS.CANCELLED,
+    status: EVENT_STATUS_FLAGS.CANCELLED,
     imageUrl: "/Walk-Bennachie-3.webp"
 
 },
