@@ -82,6 +82,17 @@ namespace web_api.Controllers
             using var inputStream = file.OpenReadStream();
             using var image = new MagickImage(inputStream);
 
+            image.AutoOrient();
+
+            uint size = Math.Min(image.Width, image.Height);
+
+            int xOffset = (int) (image.Width - size) / 2;
+            int yOffset = (int) (image.Height - size) / 2;
+
+            image.Crop(new MagickGeometry(xOffset, yOffset, size, size));
+
+            image.ResetPage();
+
             image.Resize(new MagickGeometry(512, 512) { IgnoreAspectRatio = false });
 
             image.Format = MagickFormat.WebP;
