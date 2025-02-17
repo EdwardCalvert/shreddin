@@ -106,7 +106,7 @@ const Register = () => {
             }
             errRef.current.focus();
         }
-        //setLoading(false);
+        setLoading(false);
     }
 
     return (
