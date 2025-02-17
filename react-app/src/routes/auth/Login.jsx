@@ -46,7 +46,7 @@ const Login = () => {
             );
             const data = response?.data;
             if(data){
-                setAuth({ loggedIn: true, roles: data.roles, profilePhoto: data.imageUrl, firstName: data.firstName, lastName: data.lastName });
+                setAuth({ loggedIn: true, roles: data.roles, imageUrl: data.imageUrl, firstName: data.firstName, lastName: data.lastName });
             }
             
             setPwd('');

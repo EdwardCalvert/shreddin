@@ -14,14 +14,12 @@ using SixLabors.ImageSharp.Processing;
 using Amazon.S3.Transfer;
 using web_api.DataAccess;
 using System.Security.Claims;
-using web_api.Auth;
 using ImageMagick;
 
 
 namespace web_api.Controllers
 {
-    [Route("api/v1/[controller]")]
-    [ApiController]
+    [Authorize, ApiController, Route("api/v1/[controller]")]
     public class ImageController : ControllerBase
     {
         private readonly R2 _config;
@@ -41,12 +39,6 @@ namespace web_api.Controllers
             AWSConfigsS3.UseSignatureVersion4 = true;
         }
 
-
-        //[HttpPost("event-image")]
-        //public async Task<ActionResult<PresignedUrlResponse>> Event(IFormFile file) {
-        //    return await ProcessAndUploadImage(file, "event-image");
-        //}
-
         [HttpPost("profile-photo")]
         public async Task<ActionResult<PresignedUrlResponse>> ProfilePhoto(IFormFile file)
         {
@@ -62,7 +54,7 @@ namespace web_api.Controllers
             {
                 return StatusCode(500, "Could not upload image to aws. ");
             }
-            Models.User? user = _appDbContext.Users.Where(user => user.Id == AuthMethods.GetUserGuid(User)).FirstOrDefault();
+            Models.User? user = _appDbContext.Users.Where(user => user.Id == Models.User.GetUserGuid(User)).FirstOrDefault();
             if (user == null)
             {
                 return BadRequest("Could not update the user's profile picture");
