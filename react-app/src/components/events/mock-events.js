@@ -1,14 +1,4 @@
 import { EVENT_STATUS_FLAGS } from "@components/events/event-status-flags"
-//{
-//     title: "Pitfichie",
-//     locked: false,
-//     datetime : new Date(2025, 10,12),
-//     key:"12",
-//     status: EVENT_STATUS_FLAGS.DRIVING,
-//     warnings: EVENT_WARNING_FLAGS.NONE,
-//     imageUrl: "/the-tappie-tower.jpg"
-
-// },
 
 const warnings =[
     {name: "cancelled", message:"Cancelled due to bad weather"}

@@ -11,7 +11,7 @@ import useLocalStorage from "../../hooks/useLocalStorage"
 export default function EventDetails() {
     let { id } = useParams();
     const navigate = useNavigate();
-    const [index, setIndex ] = useLocalStorage("event-details-tab",0);
+    const [index, setIndex ] = useState(0);
     const display = {
         0:<Deets/> , 
         1: <Peeps/> ,
