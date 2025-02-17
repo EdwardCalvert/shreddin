@@ -52,7 +52,7 @@ Authentication is set through HTTP only cookies, which should automatically refr
     "BucketName": "winning",
     "PublicURL": "https://example.com"
   },
-  "UserRegistrationSecurityCode": "ky1tmJOwBVoQpSc"
+  "UserRegistrationSecurityCode": "your-code"
 }
 
 ```
