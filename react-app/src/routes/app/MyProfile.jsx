@@ -4,6 +4,8 @@ import Nav from "@components/nav/header";
 import ProfilePhoto from "@components/my-profile/profile-photo";
 import useAuth from "@hooks/useAuth";
 import MainHeader from "@components/text/main-headder";
+import { Suspense, useEffect } from "react";
+import ProfileContent from "@components/my-profile/profile-content";
 
 
 export default function Profile() {
@@ -16,18 +18,16 @@ export default function Profile() {
     navigate('/');
   }
 
+
+
   return (
     <div>
     <Nav title="Your profile"  />
     <MainHeader className="text-center">Hi, {auth.firstName}!</MainHeader>
-    <ProfilePhoto/>
+    <Suspense fallback={<p>Loading</p>}>
+      <ProfileContent/>
+    </Suspense>
     
-
-    <p>My memebership status: Active</p>
-    <p>Contact the treasurer to adjust</p>
-    <button className="bg-warn-red text-white active:bg-blue-dark active:text-gray-600 rounded-md p-2" onClick={()=> signOut()}>
-    Sign out
-    </button>
 
   </div>
 );

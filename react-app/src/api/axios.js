@@ -9,8 +9,6 @@ function getUrl() {
 
 const BASE_URL = getUrl();
 
-
-
 export default axios.create({
     baseURL: BASE_URL,
     withCredentials : true
@@ -21,3 +19,4 @@ export const axiosPrivate = axios.create({
     headers: { 'Content-Type': 'application/json' },
     withCredentials: true
 })
+

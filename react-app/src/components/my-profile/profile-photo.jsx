@@ -20,7 +20,7 @@ const ProfilePhoto = () => {
             }).then(
                 success =>{
                     setUploadState("ok");
-                    setAuth({...auth, profilePhoto: success.data.url});
+                    setAuth((prevAuth) => ({...prevAuth, imageUrl: success.data.url}));
                 },
                 failure =>{
                     setUploadState("error");
@@ -39,7 +39,7 @@ const ProfilePhoto = () => {
         }
         else{
             return <>
-                <img src={auth?.profilePhoto? auth.profilePhoto : `/default.webp`} className="rounded-full w-full h-full object-cover top-0 bg-white"></img>
+                <img src={auth?.imageUrl? auth.imageUrl : `/default.webp`} className="rounded-full w-full h-full object-cover top-0 bg-white"></img>
                 <Icon icon="bi:camera-fill" className="text-blue w-10 h-10 absolute bottom-0 right-0"/> 
             </>
         }

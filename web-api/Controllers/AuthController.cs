@@ -51,7 +51,7 @@ namespace web_api.Controllers
             _logger = logger;
         }
         [HttpPost("login")]
-        public async Task<ActionResult<LoginResponseDto>> Login(Login login)
+        public async Task<ActionResult<BasicAccountInfoDto>> Login(Login login)
         {
             if (!Models.User.IsValidUsername(login.Username))
             {
@@ -92,12 +92,32 @@ namespace web_api.Controllers
             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
             await Request.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal, authProperties);
 
-            return Ok(new LoginResponseDto{ 
+            return Ok(new BasicAccountInfoDto{ 
                 roles = user.Roles, 
                 imageUrl = user.ProfilePhotoUrl, 
                 firstName = user.Firstname, 
                 lastName = user.Lastname
             });
+        }
+
+        [Authorize,HttpGet("account-info")]
+        public async Task<ActionResult<BasicAccountInfoDto>> GetAccountInfo()
+        {
+            Models.User? user = await _appDbContext.Users.Where(user => user.Id == Models.User.GetUserGuid(User)).FirstOrDefaultAsync();
+            if (user == null)
+            {
+                return BadRequest(new { frontendHint = "User could not be found" });
+            }
+            else
+            {
+                return Ok(new BasicAccountInfoDto
+                {
+                    roles = user.Roles,
+                    imageUrl = user.ProfilePhotoUrl,
+                    firstName = user.Firstname,
+                    lastName = user.Lastname
+                });
+            }
         }
 
         [HttpPost("register")]

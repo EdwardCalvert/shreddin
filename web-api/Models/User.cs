@@ -3,12 +3,23 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 using System.Text.RegularExpressions;
 using System.Net.Mail;
+using System.Security.Claims;
 
 namespace web_api.Models
 {
     [Index(nameof(Username), IsUnique = true)]
     public sealed class User
     {
+        public static Guid? GetUserGuid(ClaimsPrincipal User)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (Guid.TryParse(userId, out var guid))
+            {
+                return guid;
+            }
+            return null;
+
+        }
         public static class UserRoles
         {
             public static readonly string User = "2001";
