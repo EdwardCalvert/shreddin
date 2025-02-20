@@ -5,9 +5,7 @@ import useLogout from "./useLogout";
 const useAxiosPrivate = () => {
     const logout = useLogout();
 
-
     useEffect(() => {
-
         //Heavily inspired by
         //https://github.com/gitdagray/react_login_hooks/blob/7ccf62b87144c19fb54d0ba2bc1eecc2679bfb52/src/hooks/useAxiosPrivate.js 
         const responseIntercept = axiosPrivate.interceptors.response.use(

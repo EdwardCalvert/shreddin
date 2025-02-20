@@ -51,6 +51,7 @@ const Login = () => {
             
             setPwd('');
             navigate(from, { replace: true });
+            navigate(0);
         } catch (err) {
             console.log(err)
             if (!err?.response) {

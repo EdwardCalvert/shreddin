@@ -1,12 +1,12 @@
 import  React, { useEffect } from 'react'
 import {use} from 'react'
 import useAuth from '@hooks/useAuth'
-import fetchData from '@api/fetchData'
+import useFetchDataPrivate from '@hooks/useFetchDataPrivate'
 import ProfilePhoto from './profile-photo'
 
 let resource;
 
-const getResource = () => {
+const getResource = (fetchData) => {
     if (!resource) {
         resource = fetchData("/api/v1/auth/account-info"); 
     }
@@ -14,11 +14,11 @@ const getResource = () => {
 };
 
 const ProfileContent = () => {
-    
+    const fetchData = useFetchDataPrivate();
     const {setAuth} = useAuth();
 
+    const data = getResource(fetchData).read();
 
-    const data = getResource().read();    
     useEffect(() =>{
         if(data !== null){
             setAuth(prevAuth => ({ ...prevAuth, ...data}));
