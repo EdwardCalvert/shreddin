@@ -3,6 +3,8 @@
 
 An app to improve the user experience of signing up to trips at the University of Aberdeen's Mountain Biking Club. The focus is on simplifying signing up to trips for users, allowing committee members to understand if there is sufficient car space, and will ultimately allow for a simplified payment system based on the concept of zones, based off the mvp at [https://edwardcalvert.github.io/aumbc-zones-mvp/](https://edwardcalvert.github.io/aumbc-zones-mvp/)
 
+The app started as a [figma prototype](https://www.figma.com/design/QcJvP5MwywkM7Sar5As5RW/AUMBC-potential-app?node-id=5488-666&t=XYZJlflFSBLFEkz7-1) to explore many of the concepts discussed in the Human Computer Interaction course at UZH. 
+
 Currently, the app is a prototype to explore different interaction types and their suitability for use on a mobile phone. The app is awaiting further requirements elicitation, to understand what should happen when there are more people signed up than there is car space. 
 
 The prototype currently explores:
